@@ -6,12 +6,13 @@ import java.awt.event.ActionListener;
 public class CalculatorView extends JFrame {
     private int x = 0;
     private int y = 0;
-    private Operations operation;
+    private String operator;
+    private Operations operation = new Operations();
     private JButton addition, subtraction, multiplication, division;
     private JButton zero, one, two, three, four, five, six, seven, eight, nine, equals, clear;
     private JTextField resultField;
     private String resultString = "0";
-    private Boolean isExpression;
+    private Boolean isExpression = false;
 
 
     CalculatorView() {
@@ -60,25 +61,33 @@ public class CalculatorView extends JFrame {
         addition.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-            if(isExpression) {
-                y = Integer.parseInt(resultString);
-                resultString = String.valueOf(operation.addition(x, y));
-                resultField.setText(resultString);
-                isExpression = false;
-            }
-            else {
-               x = Integer.parseInt(resultString);
-               resultString = "";
-               resultField.setText(resultString);
-               isExpression = true;
-            }
+               if(!isExpression) {
+                   x = Integer.parseInt(resultString);
+                   operator = "addition";
+                   resultString = "";
+                   resultField.setText(resultString);
+                   isExpression = true;
+               }
            }
         });
-
         //creating the equals button
         equals = new JButton("=");
         createUtilButton(equals, 2, 4);
 
+        equals.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (isExpression) {
+                    y = Integer.parseInt(resultString);
+
+                    if (operator.equals("addition")) {
+                        resultString = String.valueOf(operation.addition(x, y));
+                        resultField.setText(resultString);
+                        isExpression = false;
+                    }
+                }
+            }
+        });
     }
     public void createUtilButton(JButton btn, int x, int y) {
         GridBagConstraints btnConstraints = new GridBagConstraints();
