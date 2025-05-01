@@ -11,4 +11,8 @@ public class Operations {
     public double division(double x, double y) {
         return x / y;
     }
+    public String addNumber(double num, String result) {
+        result = result + num;
+        return result;
+    }
 }

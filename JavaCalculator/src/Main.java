@@ -5,5 +5,6 @@ public class Main {
        CalculatorView view = new CalculatorView();
        view.setVisible(true);
        view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+       view.pack();
     }
 }
