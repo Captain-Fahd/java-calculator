@@ -44,11 +44,7 @@ public class CalculatorView extends JFrame {
 
         //creating the equals button
         clear = new JButton("C");
-        layoutConstraints = new GridBagConstraints();
-        layoutConstraints.gridx = 0;
-        layoutConstraints.gridy = 4;
-        layoutConstraints.insets = new Insets(5, 5, 5, 5);
-        add(clear, layoutConstraints);
+        createOtherButton(clear, 3, 1);
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,7 +52,17 @@ public class CalculatorView extends JFrame {
                 resultField.setText(resultString);
             }
         });
+        equals = new JButton("=");
+        createOtherButton(equals, 2, 4);
 
+    }
+    public void createOtherButton(JButton btn, int x, int y) {
+        GridBagConstraints btnConstraints = new GridBagConstraints();
+        //Create other button style
+        btnConstraints.gridx = x;
+        btnConstraints.gridy = y;
+        btnConstraints.insets = new Insets(5, 5, 5, 5);
+        add(btn, btnConstraints);
     }
 
     public void createNumButton(JButton btn, String btnText, int val, int x, int y) {
