@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class CalculatorView extends JFrame {
     private String operation;
     private JButton Addition, Subtraction, Multiplication, Division, Equals, Clear;
-    private JButton zero, one, two, three, four, five, six, seven, eight, nine;
+    private JButton zero, one, two, three, four, five, six, seven, eight, nine, equals, clear;
     private JTextField resultField;
     private String resultString = "0";
     private Boolean isExpression;
@@ -30,11 +30,33 @@ public class CalculatorView extends JFrame {
         layoutConstraints.insets = new Insets(5, 5, 5, 5);
         add(resultField, layoutConstraints);
 
-        //Adding the zero button
-        createNumButton(zero, "0", 0, 1, 3);
-        createNumButton(one, "1", 1, 0, 2);
-        createNumButton(two, "2", 2, 1, 2);
-        createNumButton(three, "3", 3, 2, 2);
+        //making the number button
+        createNumButton(zero, "0", 0, 1, 4);
+        createNumButton(one, "1", 1, 2, 3);
+        createNumButton(two, "2", 2, 1, 3);
+        createNumButton(three, "3", 3, 0, 3);
+        createNumButton(four, "4", 4, 2, 2);
+        createNumButton(five, "5", 5, 1, 2);
+        createNumButton(six, "6", 6, 0, 2);
+        createNumButton(seven, "7", 7, 2, 1);
+        createNumButton(eight, "8", 8, 1, 1);
+        createNumButton(nine, "9", 9, 0, 1);
+
+        //creating the equals button
+        clear = new JButton("C");
+        layoutConstraints = new GridBagConstraints();
+        layoutConstraints.gridx = 0;
+        layoutConstraints.gridy = 4;
+        layoutConstraints.insets = new Insets(5, 5, 5, 5);
+        add(clear, layoutConstraints);
+        clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultString = "";
+                resultField.setText(resultString);
+            }
+        });
+
     }
 
     public void createNumButton(JButton btn, String btnText, int val, int x, int y) {
@@ -48,8 +70,12 @@ public class CalculatorView extends JFrame {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(resultString.equals("0")) {
+                    resultString = "";
+                }
                 resultString = resultString + val;
-                if(Integer.parseInt(resultField.getText()) == 0 && val == 0) {
+
+                if (Integer.parseInt(resultString) == 0 && val == 0) {
                     resultString = "0";
                 }
                 resultField.setText(resultString);
