@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CalculatorView extends JFrame {
-    private String operation;
-    private JButton Addition, Subtraction, Multiplication, Division, Equals, Clear;
+    private int x = 0;
+    private int y = 0;
+    private Operations operation;
+    private JButton addition, subtraction, multiplication, division;
     private JButton zero, one, two, three, four, five, six, seven, eight, nine, equals, clear;
     private JTextField resultField;
     private String resultString = "0";
@@ -42,9 +44,9 @@ public class CalculatorView extends JFrame {
         createNumButton(eight, "8", 8, 1, 1);
         createNumButton(nine, "9", 9, 0, 1);
 
-        //creating the equals button
+        //creating the clear button
         clear = new JButton("C");
-        createOtherButton(clear, 3, 1);
+        createUtilButton(clear, 3, 1);
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,13 +54,35 @@ public class CalculatorView extends JFrame {
                 resultField.setText(resultString);
             }
         });
+        //creating the addition button
+        addition = new JButton("+");
+        createUtilButton(addition, 3, 2);
+        addition.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+            if(isExpression) {
+                y = Integer.parseInt(resultString);
+                resultString = String.valueOf(operation.addition(x, y));
+                resultField.setText(resultString);
+                isExpression = false;
+            }
+            else {
+               x = Integer.parseInt(resultString);
+               resultString = "";
+               resultField.setText(resultString);
+               isExpression = true;
+            }
+           }
+        });
+
+        //creating the equals button
         equals = new JButton("=");
-        createOtherButton(equals, 2, 4);
+        createUtilButton(equals, 2, 4);
 
     }
-    public void createOtherButton(JButton btn, int x, int y) {
+    public void createUtilButton(JButton btn, int x, int y) {
         GridBagConstraints btnConstraints = new GridBagConstraints();
-        //Create other button style
+        //Create other button
         btnConstraints.gridx = x;
         btnConstraints.gridy = y;
         btnConstraints.insets = new Insets(5, 5, 5, 5);
