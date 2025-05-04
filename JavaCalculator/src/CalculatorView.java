@@ -70,9 +70,43 @@ public class CalculatorView extends JFrame {
                }
            }
         });
+
+        //Creating the multiplication button
+        multiplication = new JButton("x");
+        createUtilButton(multiplication, 3, 3);
+        multiplication.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               if(!isExpression) {
+                   x = Integer.parseInt(resultString);
+                   operator = "multiplication";
+                   resultString = "";
+                   resultField.setText(resultString);
+                   isExpression = true;
+               }
+           }
+        });
+
+        //Creating the division button
+        division = new JButton("÷");
+        createUtilButton(division, 3, 4);
+        division.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!isExpression) {
+                    x = Integer.parseInt(resultString);
+                    operator = "division";
+                    resultString = "";
+                    resultField.setText(resultString);
+                    isExpression = true;
+                }
+            }
+        });
+
         //creating the equals button
         equals = new JButton("=");
         createUtilButton(equals, 2, 4);
+
 
         equals.addActionListener(new ActionListener() {
             @Override
@@ -85,9 +119,15 @@ public class CalculatorView extends JFrame {
                         resultField.setText(resultString);
                         isExpression = false;
                     }
+                    else if (operator.equals("multiplication")) {
+                        resultString = String.valueOf(operation.multiplication(x, y));
+                        resultField.setText(resultString);
+                        isExpression = false;
+                    }
                 }
             }
         });
+
     }
     public void createUtilButton(JButton btn, int x, int y) {
         GridBagConstraints btnConstraints = new GridBagConstraints();
